@@ -8,13 +8,13 @@
     tools:context=".ui.activity.MainActivity"
     android:orientation="vertical">
 
-    <TextureView
-        android:id="@+id/view_finder"
+    <ImageView
+        android:id="@+id/ivDisplayImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_camera"
+        android:id="@+id/fabChooseImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabSize="normal"
@@ -35,7 +35,7 @@
         app:backgroundTint="@android:color/white"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_switch_camera"
+        android:id="@+id/fabUploadImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabSize="normal"

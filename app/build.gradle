@@ -3,7 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
-    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
+    /*id 'androidx.navigation.safeargs.kotlin'*/
 }
 
 android {
@@ -43,6 +44,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-firestore:22.0.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -90,7 +92,7 @@ dependencies {
     //FACEBOOK ADS
     implementation 'com.facebook.android:audience-network-sdk:5.+'
 
-    // CameraX
-    implementation 'com.github.owahltinez:androidx-camera-activity:master-SNAPSHOT'
+    // Storage
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
 
 }
