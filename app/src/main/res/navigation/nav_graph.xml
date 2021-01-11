@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="tech.gamedev.beauty_scanner.ui.fragments.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_peopleFragment"
-            app:destination="@id/peopleFragment" />
+            app:destination="@id/gradeFragment" />
     </fragment>
     <fragment
         android:id="@+id/scanFragment"
@@ -20,7 +20,7 @@
         android:label="fragment_scan"
         tools:layout="@layout/fragment_scan" />
     <fragment
-        android:id="@+id/peopleFragment"
+        android:id="@+id/gradeFragment"
         android:name="tech.gamedev.beauty_scanner.ui.fragments.GradeFragment"
         android:label="fragment_people"
         tools:layout="@layout/fragment_people" />
@@ -39,4 +39,44 @@
         android:name="tech.gamedev.beauty_scanner.ui.fragments.TopRatedFragment"
         android:label="fragment_top_rated"
         tools:layout="@layout/fragment_top_rated" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+        <argument
+            android:name="LoginFrom"
+            app:argType="tech.gamedev.beauty_scanner.other.LoginFrom" />
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_scanFragment"
+            app:destination="@id/scanFragment" />
+    </fragment>
+
+    <action
+        android:id="@+id/actionGlobalToLoginFragment"
+        app:destination="@+id/loginFragment" />
+
+    <action
+        android:id="@+id/actionGlobalToRegisterFragment"
+        app:destination="@+id/registerFragment" />
+
+    <action
+        android:id="@+id/actionGlobalToScanFragment"
+        app:destination="@+id/scanFragment" />
+    <action
+        android:id="@+id/actionGlobalToGradeFragment"
+        app:destination="@+id/gradeFragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register">
+        <argument
+            android:name="loginFrom"
+            app:argType="tech.gamedev.beauty_scanner.other.LoginFrom" />
+    </fragment>
+
 </navigation>

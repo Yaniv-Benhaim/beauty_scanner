@@ -1,11 +1,11 @@
 package tech.gamedev.beauty_scanner.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.findNavController()
                 .addOnDestinationChangedListener { _, destination, _ ->
                     when (destination.id) {
-                        R.id.scanFragment, R.id.peopleFragment, R.id.settingsFragment, R.id.profileFragment, R.id.topRatedFragment ->
+                        R.id.scanFragment, R.id.gradeFragment, R.id.settingsFragment, R.id.profileFragment, R.id.topRatedFragment ->
                             bottomNavigationView.visibility = View.VISIBLE
                         else -> bottomNavigationView.visibility = View.GONE
                     }

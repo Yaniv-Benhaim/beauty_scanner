@@ -14,18 +14,25 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_scan.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import tech.gamedev.beauty_scanner.R
-import tech.gamedev.beauty_scanner.data.Constants.IMAGE_REQUEST_CODE
+import tech.gamedev.beauty_scanner.other.Constants.IMAGE_REQUEST_CODE
+import tech.gamedev.beauty_scanner.other.LoginFrom
 import tech.gamedev.beauty_scanner.viewmodels.ScanViewModel
 import java.util.*
-import kotlin.properties.Delegates
 
 
 class ScanFragment : Fragment(R.layout.fragment_scan) {
+
+    lateinit var auth: FirebaseAuth
 
 
     lateinit var storage: FirebaseStorage
@@ -38,9 +45,14 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
         storageRef = storage.reference
+
+        //TODO REMOVE AUTOMATIC SIGN OUT
+        auth.uid?.let {
+            auth.signOut()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,21 +67,28 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
         btnCommunityRating.setOnClickListener {
             scanViewModel.setIfVisible(false)
             isAi = false
-            chooseImage()
+            checkIfSignedIn()
         }
 
         subscribeToObservers()
 
 
-        }
+    }
 
-    private fun subscribeToObservers () {
+    private fun checkIfSignedIn() {
+
+        if (/*auth.uid != null*/false) {
+
+            chooseImage()
+        } else {
+            val action = ScanFragmentDirections.actionGlobalToLoginFragment(LoginFrom.SCAN_FRAGMENT)
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun subscribeToObservers() {
         scanViewModel.isVisible.observe(viewLifecycleOwner) {
-            if(it)(
-                showButtons()
-            )else{
-                hideButtons()
-            }
+
         }
     }
 
@@ -157,7 +176,7 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
             if(isAi){
                 rateImage(bitmap)
             }
-            showButtons()
+
 
 
         }catch (e: Exception) {
@@ -179,6 +198,7 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
         }
     }
 
+
     private fun hideButtons() = CoroutineScope(Dispatchers.Main).launch {
         btnAIScan.isVisible = false
         btnCommunityRating.isVisible = false
@@ -187,16 +207,18 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
         tvPleaseWait.isVisible = true
         tvPleaseWait.isVisible = true
 
+        showButtons()
+
     }
 
     private fun showButtons() = CoroutineScope(Dispatchers.IO).launch {
-        delay(9000L)
-        withContext(Dispatchers.Main){
-        btnAIScan.isVisible = true
-        btnCommunityRating.isVisible = true
-        lottieScanning.isVisible = false
-        tvRating.isVisible = true
-        tvPleaseWait.isVisible = false
+
+        withContext(Dispatchers.Main) {
+            btnAIScan.isVisible = true
+            btnCommunityRating.isVisible = true
+            lottieScanning.isVisible = false
+            tvRating.isVisible = true
+            tvPleaseWait.isVisible = false
         }
     }
 }
