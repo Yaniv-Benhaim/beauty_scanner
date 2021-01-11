@@ -16,7 +16,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
 
         btnLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_splashFragment_to_scanFragment)
+            findNavController().navigate(R.id.action_splashFragment_to_peopleFragment)
         }
     }
 

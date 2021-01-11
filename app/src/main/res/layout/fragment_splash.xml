@@ -6,6 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.SplashFragment">
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/lottie_scan_line"
+        app:lottie_autoPlay="true"
+        android:elevation="2dp"
+        app:lottie_loop="true"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,13 +21,33 @@
         android:src="@drawable/model_bg"/>
 
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:gravity="center"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="48dp"
-        android:text="GO"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:elevation="3dp"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/beauty"
+        android:gravity="center"
+        android:text="Beauty Scanner"
+        android:textColor="@color/white"
+        android:textSize="60sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:elevation="3dp"
+        android:layout_marginBottom="100dp"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_background_pink"
+        android:fontFamily="@font/baloo"
+        android:gravity="center"
+        android:text="continue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="48dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

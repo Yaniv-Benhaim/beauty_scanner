@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/scanFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -11,8 +11,8 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragment_to_scanFragment"
-            app:destination="@id/scanFragment" />
+            android:id="@+id/action_splashFragment_to_peopleFragment"
+            app:destination="@id/peopleFragment" />
     </fragment>
     <fragment
         android:id="@+id/scanFragment"
@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_scan" />
     <fragment
         android:id="@+id/peopleFragment"
-        android:name="tech.gamedev.beauty_scanner.ui.fragments.PeopleFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.GradeFragment"
         android:label="fragment_people"
         tools:layout="@layout/fragment_people" />
     <fragment
@@ -29,4 +29,14 @@
         android:name="tech.gamedev.beauty_scanner.ui.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/topRatedFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.TopRatedFragment"
+        android:label="fragment_top_rated"
+        tools:layout="@layout/fragment_top_rated" />
 </navigation>

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/peopleFragment"
+        android:icon="@drawable/ic_people"
+        android:title="CommunityGrade"
+        app:showAsAction="always"/>
+
     <item
         android:id="@+id/scanFragment"
         android:icon="@drawable/ic_scan"
@@ -8,10 +16,16 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/peopleFragment"
+        android:id="@+id/topRatedFragment"
+        android:icon="@drawable/ic_rated"
+        android:title="@string/facescan"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_people"
-        android:title="@string/people"
-        app:showAsAction="always"/>
+        android:title="@string/facescan"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/settingsFragment"

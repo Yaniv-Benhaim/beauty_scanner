@@ -8,6 +8,6 @@ import android.view.ViewGroup
 import tech.gamedev.beauty_scanner.R
 
 
-class PeopleFragment : Fragment(R.layout.fragment_people) {
+class TopRatedFragment : Fragment(R.layout.fragment_top_rated) {
 
 }
