@@ -22,10 +22,8 @@ import kotlinx.android.synthetic.main.fragment_scan.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import tech.gamedev.beauty_scanner.R
 import tech.gamedev.beauty_scanner.other.Constants.IMAGE_REQUEST_CODE
-import tech.gamedev.beauty_scanner.other.LoginFrom
 import tech.gamedev.beauty_scanner.viewmodels.ScanViewModel
 import java.util.*
 
@@ -49,10 +47,6 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
         storage = FirebaseStorage.getInstance()
         storageRef = storage.reference
 
-        //TODO REMOVE AUTOMATIC SIGN OUT
-        auth.uid?.let {
-            auth.signOut()
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,12 +71,11 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
 
     private fun checkIfSignedIn() {
 
-        if (/*auth.uid != null*/false) {
+        if (auth.uid != null) {
 
             chooseImage()
         } else {
-            val action = ScanFragmentDirections.actionGlobalToLoginFragment(LoginFrom.SCAN_FRAGMENT)
-            findNavController().navigate(action)
+            findNavController().navigate(R.id.actionGlobalToLoginFragment)
         }
     }
 
@@ -94,9 +87,7 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
 
     private fun rateImage(bitmap: Bitmap)  {
         val rating = scanViewModel.calculateRating(bitmap)
-
-            tvRating.text = rating.toString()
-
+        tvPleaseWait.text = rating.toString()
     }
 
 
@@ -199,11 +190,10 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
     }
 
 
-    private fun hideButtons() = CoroutineScope(Dispatchers.Main).launch {
+    private fun hideButtons() {
         btnAIScan.isVisible = false
         btnCommunityRating.isVisible = false
         lottieScanning.isVisible = true
-        tvRating.isVisible = false
         tvPleaseWait.isVisible = true
         tvPleaseWait.isVisible = true
 
@@ -211,14 +201,10 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
 
     }
 
-    private fun showButtons() = CoroutineScope(Dispatchers.IO).launch {
-
-        withContext(Dispatchers.Main) {
-            btnAIScan.isVisible = true
-            btnCommunityRating.isVisible = true
-            lottieScanning.isVisible = false
-            tvRating.isVisible = true
-            tvPleaseWait.isVisible = false
-        }
+    private fun showButtons() {
+        btnAIScan.isVisible = true
+        btnCommunityRating.isVisible = true
+        lottieScanning.isVisible = false
+        tvPleaseWait.isVisible = false
     }
 }

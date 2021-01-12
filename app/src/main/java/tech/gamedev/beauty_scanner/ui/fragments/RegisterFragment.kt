@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -17,12 +16,11 @@ import kotlinx.coroutines.withContext
 import tech.gamedev.beauty_scanner.R
 import tech.gamedev.beauty_scanner.data.models.User
 import tech.gamedev.beauty_scanner.other.Constants.USER_COLLECTION
-import tech.gamedev.beauty_scanner.other.LoginFrom
 
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
-    val args: RegisterFragmentArgs by navArgs()
+
     lateinit var auth: FirebaseAuth
     lateinit var firestore: FirebaseFirestore
 
@@ -60,14 +58,11 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             firestore.collection(USER_COLLECTION).add(user).await()
             withContext(Dispatchers.Main) {
                 Toast.makeText(
-                    requireContext(),
-                    "Saved username successfully",
-                    Toast.LENGTH_LONG
+                        requireContext(),
+                        "Saved username successfully",
+                        Toast.LENGTH_LONG
                 ).show()
-                when (args.loginFrom) {
-                    LoginFrom.PEOPLE_FRAGMENT -> findNavController().navigate(R.id.actionGlobalToGradeFragment)
-                    LoginFrom.SCAN_FRAGMENT -> findNavController().navigate(R.id.actionGlobalToScanFragment)
-                }
+                findNavController().navigate(R.id.actionGlobalToGradeFragment)
             }
 
 

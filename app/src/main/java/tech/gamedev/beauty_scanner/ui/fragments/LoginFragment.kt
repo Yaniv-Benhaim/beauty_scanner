@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -25,30 +24,28 @@ import tech.gamedev.beauty_scanner.R
 import tech.gamedev.beauty_scanner.data.models.User
 import tech.gamedev.beauty_scanner.other.Constants.AUTH_REQUEST_CODE
 import tech.gamedev.beauty_scanner.other.Constants.USER_COLLECTION
-import tech.gamedev.beauty_scanner.other.LoginFrom
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     lateinit var auth: FirebaseAuth
     lateinit var firestore: FirebaseFirestore
-    lateinit var loginFrom: LoginFrom
-    private val args: LoginFragmentArgs by navArgs()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-        loginFrom = args.LoginFrom
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnLogin.setOnClickListener {
             val gso = GoogleSignInOptions.Builder(
-                GoogleSignInOptions.DEFAULT_SIGN_IN
+                    GoogleSignInOptions.DEFAULT_SIGN_IN
             )
-                .requestIdToken("806669225699-jqbq7fm7pum1aqq7kb2gbmak7rmqtaoh.apps.googleusercontent.com")
+                    .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
 
@@ -104,16 +101,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
                     if (users.isEmpty()) {
-
-                        val action =
-                            LoginFragmentDirections.actionGlobalToRegisterFragment(args.LoginFrom)
-                        findNavController().navigate(action)
-
+                        findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
                     } else {
-                        when (loginFrom) {
-                            LoginFrom.SCAN_FRAGMENT -> findNavController().navigate(R.id.actionGlobalToScanFragment)
-                            LoginFrom.PEOPLE_FRAGMENT -> findNavController().navigate(R.id.actionGlobalToGradeFragment)
-                        }
+                        findNavController().navigate(R.id.actionGlobalToGradeFragment)
                     }
 
                 }

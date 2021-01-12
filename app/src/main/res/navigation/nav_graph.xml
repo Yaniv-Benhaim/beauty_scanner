@@ -44,9 +44,6 @@
         android:name="tech.gamedev.beauty_scanner.ui.fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
-        <argument
-            android:name="LoginFrom"
-            app:argType="tech.gamedev.beauty_scanner.other.LoginFrom" />
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -74,9 +71,7 @@
         android:name="tech.gamedev.beauty_scanner.ui.fragments.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register">
-        <argument
-            android:name="loginFrom"
-            app:argType="tech.gamedev.beauty_scanner.other.LoginFrom" />
+
     </fragment>
 
 </navigation>
