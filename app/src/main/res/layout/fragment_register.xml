@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:gravity="center"
-        android:text="You don't have a username yet"
+        android:text="@string/you_don_t_have_a_username_yet"
         android:textColor="@color/white"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -26,9 +26,11 @@
         android:layout_width="match_parent"
         android:layout_height="47dp"
         android:layout_margin="48dp"
+        android:hint="@string/please_choose_a_username"
         android:background="@drawable/et_background"
-        android:hint="Please choose a username..."
+        android:inputType="text"
         android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/tvFirstTime" />
 
@@ -38,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="48dp"
         android:background="@drawable/btn_background_pink"
-        android:text="Save username"
+        android:text="@string/save_username"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

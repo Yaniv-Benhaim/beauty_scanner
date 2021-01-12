@@ -19,7 +19,7 @@
         android:layout_marginTop="120dp"
         android:fontFamily="@font/beauty"
         android:gravity="center"
-        android:text="Beauty Scanner"
+        android:text="@string/beauty_scanner"
         android:textColor="@color/white"
         android:textSize="60sp"
         android:textStyle="normal"

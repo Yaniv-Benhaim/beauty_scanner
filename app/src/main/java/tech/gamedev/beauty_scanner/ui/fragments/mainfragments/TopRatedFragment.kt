@@ -11,13 +11,12 @@ import kotlinx.android.synthetic.main.fragment_top_rated.*
 import tech.gamedev.beauty_scanner.R
 import tech.gamedev.beauty_scanner.adapters.GridAdapter
 import tech.gamedev.beauty_scanner.data.models.UserImage
-import tech.gamedev.beauty_scanner.ui.fragments.TopRatedFragmentDirections
 import tech.gamedev.beauty_scanner.viewmodels.MainViewModel
 
 
 class TopRatedFragment : Fragment(R.layout.fragment_top_rated), GridAdapter.OnPostClicked {
 
-    lateinit var gridAdapter: GridAdapter
+    private lateinit var gridAdapter: GridAdapter
     private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

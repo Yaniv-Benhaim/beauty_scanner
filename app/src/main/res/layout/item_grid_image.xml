@@ -15,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/grid_post_image"
         tools:background="@drawable/img_example_user" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/model_bg"/>
+        android:contentDescription="@string/background_image"
+        android:src="@drawable/model_bg" />
 
 
     <TextView
@@ -28,7 +29,7 @@
         android:layout_marginTop="80dp"
         android:fontFamily="@font/beauty"
         android:gravity="center"
-        android:text="Beauty Scanner"
+        android:text="@string/beauty_scanner"
         android:textColor="@color/white"
         android:textSize="60sp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,7 @@
         android:background="@drawable/btn_background_pink"
         android:fontFamily="@font/baloo"
         android:gravity="center"
-        android:text="continue"
+        android:text="@string/continue_button"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="48dp" />
 

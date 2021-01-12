@@ -28,8 +28,8 @@ import tech.gamedev.beauty_scanner.other.Constants.USER_COLLECTION
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
-    lateinit var auth: FirebaseAuth
-    lateinit var firestore: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_scan_example"/>
+        android:contentDescription="@string/background_image"
+        android:src="@drawable/img_scan_example" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieScanning"
@@ -53,7 +54,7 @@
         android:id="@+id/btnCommunityRating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Community Rating"
+        android:text="@string/community_rating"
         android:elevation="4dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/btnAIScan"

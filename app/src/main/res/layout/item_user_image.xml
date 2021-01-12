@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:src="@drawable/img_example_user"
+        android:contentDescription="@string/post_image"
         android:scaleType="centerCrop"/>
 
     <com.airbnb.lottie.LottieAnimationView
@@ -37,6 +38,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/ic_share_2"
+        android:contentDescription="@string/share_post"
         android:layout_marginTop="100dp"/>
 
     <ImageView
@@ -44,6 +46,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="24dp"
+        android:contentDescription="@string/chat_button"
         app:layout_constraintTop_toBottomOf="@id/btnShare"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/messenger"
@@ -55,24 +58,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Julie defranco"
         android:gravity="center"
         android:textSize="24sp"
         android:fontFamily="@font/baloo"
         android:textColor="@color/white"/>
 
-    <!--<RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:rating="4"
-        android:stepSize="1"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/HeartRatingBarStyle"
-        />-->
 
     <TextView
         android:id="@+id/tvRateMe"
@@ -81,7 +71,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/baloo"
         android:gravity="center"
-        android:text="Rate me"
+        android:text="@string/rate_me"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/vvNumberRating" />

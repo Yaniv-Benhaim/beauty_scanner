@@ -21,8 +21,8 @@ import tech.gamedev.beauty_scanner.other.Constants.USER_COLLECTION
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
 
-    lateinit var auth: FirebaseAuth
-    lateinit var firestore: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

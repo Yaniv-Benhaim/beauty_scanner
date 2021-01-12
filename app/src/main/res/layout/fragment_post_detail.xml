@@ -10,6 +10,7 @@
         android:id="@+id/ivDetailImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/post_image"
         android:scaleType="centerCrop"
         tools:src="@drawable/img_example_user" />
 
@@ -22,6 +23,7 @@
         android:layout_marginEnd="24dp"
         android:src="@drawable/ic_share_2"
         app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/share_post"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -29,6 +31,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="32dp"
+        android:contentDescription="@string/chat_button"
         android:layout_marginEnd="24dp"
         android:src="@drawable/messenger"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +44,6 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/baloo"
         android:gravity="center"
-        android:text="Julie defranco"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent" />

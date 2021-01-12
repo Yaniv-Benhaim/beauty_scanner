@@ -30,12 +30,12 @@ import java.util.*
 
 class ScanFragment : Fragment(R.layout.fragment_scan) {
 
-    lateinit var auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
 
-    lateinit var storage: FirebaseStorage
-    lateinit var filePath: Uri
-    lateinit var storageRef: StorageReference
+    private lateinit var storage: FirebaseStorage
+    private lateinit var filePath: Uri
+    private lateinit var storageRef: StorageReference
 
     private var isAi: Boolean = false
     private val scanViewModel: ScanViewModel by activityViewModels()

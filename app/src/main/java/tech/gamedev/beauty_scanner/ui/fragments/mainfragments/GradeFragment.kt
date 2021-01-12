@@ -14,7 +14,7 @@ import tech.gamedev.beauty_scanner.viewmodels.MainViewModel
 @AndroidEntryPoint
 class GradeFragment : Fragment(R.layout.fragment_people) {
 
-    lateinit var gradeAdapter: GradeAdapter
+    private lateinit var gradeAdapter: GradeAdapter
     private val mainViewModel: MainViewModel by activityViewModels()
 
 
