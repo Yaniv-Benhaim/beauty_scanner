@@ -9,10 +9,15 @@ import kotlinx.android.synthetic.main.item_grid_image.view.*
 import tech.gamedev.beauty_scanner.R
 import tech.gamedev.beauty_scanner.data.models.UserImage
 
-class GridAdapter(private val userImages: List<UserImage>) : RecyclerView.Adapter<GridAdapter.GradeViewHolder>() {
+class GridAdapter(private val userImages: List<UserImage>, private val listener: OnPostClicked) :
+    RecyclerView.Adapter<GridAdapter.GradeViewHolder>() {
 
     class GradeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+        fun initialize(position: Int, action: OnPostClicked) {
+            itemView.setOnClickListener {
+                action.onPostClicked(position)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GradeViewHolder {
@@ -25,9 +30,14 @@ class GridAdapter(private val userImages: List<UserImage>) : RecyclerView.Adapte
             Glide.with(this).load(user.imageUrl).into(ivGridImage)
 
         }
+        holder.initialize(position, listener)
     }
 
     override fun getItemCount(): Int {
         return userImages.size
+    }
+
+    interface OnPostClicked {
+        fun onPostClicked(position: Int)
     }
 }

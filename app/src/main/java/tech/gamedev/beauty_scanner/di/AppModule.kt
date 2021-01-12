@@ -10,6 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import tech.gamedev.beauty_scanner.R
+import tech.gamedev.beauty_scanner.repo.MainRepo
 import javax.inject.Singleton
 
 @Module
@@ -26,5 +27,9 @@ object AppModule {
             .error(R.drawable.img_example_user)
             .diskCacheStrategy(DiskCacheStrategy.DATA)
     )
+
+    @Singleton
+    @Provides
+    fun provideMainRepo() = MainRepo()
 
 }

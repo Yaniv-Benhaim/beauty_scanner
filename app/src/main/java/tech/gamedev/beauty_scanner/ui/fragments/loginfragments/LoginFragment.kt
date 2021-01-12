@@ -1,4 +1,4 @@
-package tech.gamedev.beauty_scanner.ui.fragments
+package tech.gamedev.beauty_scanner.ui.fragments.loginfragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -37,28 +37,27 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnLogin.setOnClickListener {
-            val gso = GoogleSignInOptions.Builder(
-                    GoogleSignInOptions.DEFAULT_SIGN_IN
-            )
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-
-            val signInClient = GoogleSignIn.getClient(requireContext(), gso)
-
-            signInClient.signInIntent.also {
-                startActivityForResult(it, AUTH_REQUEST_CODE)
-            }
-        }
+        btnLogin.setOnClickListener { signIn() }
     }
 
     private fun signIn() {
+        val gso = GoogleSignInOptions.Builder(
+            GoogleSignInOptions.DEFAULT_SIGN_IN
+        )
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
 
+        val signInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+        signInClient.signInIntent.also {
+            startActivityForResult(it, AUTH_REQUEST_CODE)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -112,6 +111,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        auth = FirebaseAuth.getInstance()
+        auth.currentUser?.let {
+            findNavController().navigate(R.id.actionGlobalToGradeFragment)
         }
 
     }

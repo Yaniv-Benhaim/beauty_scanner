@@ -77,6 +77,12 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-runtime:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+
     // Navigation Components
     implementation "androidx.navigation:navigation-fragment-ktx:2.3.2"
     implementation "androidx.navigation:navigation-ui-ktx:2.3.2"
@@ -99,8 +105,7 @@ dependencies {
     //LOTTIE
     implementation 'com.airbnb.android:lottie:3.6.0'
 
-    //LIQUID SWIPE
-    implementation 'com.github.Chrisvin:LiquidSwipe:1.3'
+
 
     //Dagger - Hilt
     implementation "com.google.dagger:hilt-android:2.28-alpha"

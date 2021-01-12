@@ -1,4 +1,4 @@
-package tech.gamedev.beauty_scanner.ui.fragments
+package tech.gamedev.beauty_scanner.ui.fragments.mainfragments
 
 
 import android.app.Activity.RESULT_OK
@@ -72,7 +72,6 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
     private fun checkIfSignedIn() {
 
         if (auth.uid != null) {
-
             chooseImage()
         } else {
             findNavController().navigate(R.id.actionGlobalToLoginFragment)

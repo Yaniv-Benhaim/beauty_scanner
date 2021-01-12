@@ -1,4 +1,4 @@
-package tech.gamedev.beauty_scanner.ui.fragments
+package tech.gamedev.beauty_scanner.ui.fragments.loginfragments
 
 import android.os.Bundle
 import android.view.View

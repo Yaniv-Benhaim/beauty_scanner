@@ -7,41 +7,37 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="tech.gamedev.beauty_scanner.ui.fragments.SplashFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.splashfragment.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash">
-        <action
-            android:id="@+id/action_splashFragment_to_peopleFragment"
-            app:destination="@id/gradeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_splash" />
     <fragment
         android:id="@+id/scanFragment"
-        android:name="tech.gamedev.beauty_scanner.ui.fragments.ScanFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.mainfragments.ScanFragment"
         android:label="fragment_scan"
         tools:layout="@layout/fragment_scan" />
     <fragment
         android:id="@+id/gradeFragment"
-        android:name="tech.gamedev.beauty_scanner.ui.fragments.GradeFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.mainfragments.GradeFragment"
         android:label="fragment_people"
         tools:layout="@layout/fragment_people" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="tech.gamedev.beauty_scanner.ui.fragments.SettingsFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.mainfragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="tech.gamedev.beauty_scanner.ui.fragments.ProfileFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.mainfragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/topRatedFragment"
-        android:name="tech.gamedev.beauty_scanner.ui.fragments.TopRatedFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.mainfragments.TopRatedFragment"
         android:label="fragment_top_rated"
         tools:layout="@layout/fragment_top_rated" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="tech.gamedev.beauty_scanner.ui.fragments.LoginFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.loginfragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
         <action
@@ -68,10 +64,24 @@
         app:destination="@+id/gradeFragment" />
     <fragment
         android:id="@+id/registerFragment"
-        android:name="tech.gamedev.beauty_scanner.ui.fragments.RegisterFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.loginfragments.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register">
 
     </fragment>
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.detailfragments.PostDetailFragment"
+        android:label="fragment_post_detail"
+        tools:layout="@layout/fragment_post_detail">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
+
+    <action
+        android:id="@+id/actionGlobalToPostDetailFragment"
+        app:destination="@id/postDetailFragment" />
+
 
 </navigation>

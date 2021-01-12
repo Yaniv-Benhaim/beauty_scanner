@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/pink"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.TopRatedFragment">
+    tools:context=".ui.fragments.mainfragments.TopRatedFragment">
 
     <EditText
         android:id="@+id/etSearch"
@@ -15,6 +15,7 @@
         android:layout_marginEnd="48dp"
         android:layout_marginTop="12dp"
         android:hint="Search"
+        android:elevation="4dp"
         android:drawablePadding="4dp"
         android:padding="4dp"
         android:drawableLeft="@drawable/ic_baseline_search_24"
@@ -23,9 +24,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGridImages"
-        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etSearch" />
