@@ -2,7 +2,6 @@ package tech.gamedev.beauty_scanner.ui.fragments.mainfragments
 
 
 import android.app.Activity.RESULT_OK
-import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -11,7 +10,6 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -19,13 +17,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_scan.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import tech.gamedev.beauty_scanner.R
 import tech.gamedev.beauty_scanner.other.Constants.IMAGE_REQUEST_CODE
 import tech.gamedev.beauty_scanner.viewmodels.ScanViewModel
-import java.util.*
 
 
 class ScanFragment : Fragment(R.layout.fragment_scan) {
@@ -33,9 +27,10 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
     private lateinit var auth: FirebaseAuth
 
 
-    private lateinit var storage: FirebaseStorage
+
     private lateinit var filePath: Uri
     private lateinit var storageRef: StorageReference
+    private lateinit var storage: FirebaseStorage
 
     private var isAi: Boolean = false
     private val scanViewModel: ScanViewModel by activityViewModels()
@@ -84,10 +79,6 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
         }
     }
 
-    private fun rateImage(bitmap: Bitmap)  {
-        val rating = scanViewModel.calculateRating(bitmap)
-        tvPleaseWait.text = rating.toString()
-    }
 
 
     private fun chooseImage() {
@@ -104,54 +95,7 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
         scanViewModel.setIfVisible(true)
     }
 
-    private fun uploadImage() = CoroutineScope(Dispatchers.IO).launch {
 
-        // Code for showing progressDialog while uploading
-        val progressDialog = ProgressDialog(requireContext())
-        progressDialog.setTitle("Uploading...")
-        progressDialog.show()
-
-        // Defining the child of storageReference
-        val ref: StorageReference = storageRef
-            .child(
-                "images/"
-                        + UUID.randomUUID().toString()
-            )
-
-        // adding listeners on upload
-        // or failure of image
-        ref.putFile(filePath)
-            .addOnSuccessListener { // Image uploaded successfully
-                // Dismiss dialog
-                progressDialog.dismiss()
-                Toast
-                    .makeText(
-                        requireContext(),
-                        "Image Uploaded!!",
-                        Toast.LENGTH_SHORT
-                    )
-                    .show()
-            }
-            .addOnFailureListener { e -> // Error, Image not uploaded
-                progressDialog.dismiss()
-                Toast
-                    .makeText(
-                        requireContext(),
-                        "Failed " + e.message,
-                        Toast.LENGTH_SHORT
-                    )
-                    .show()
-            }
-            .addOnProgressListener { taskSnapshot ->
-                val progress = (100.0
-                        * taskSnapshot.bytesTransferred
-                        / taskSnapshot.totalByteCount)
-                progressDialog.setMessage(
-                    "Uploaded "
-                            + progress.toInt() + "%"
-                )
-            }
-    }
 
     private fun displayImage(data: Intent) {
         filePath = data.data!!
@@ -163,8 +107,11 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
 
             ivDisplayImage.setImageBitmap(newBitMap)
             bitmap = newBitMap
-            if(isAi){
-                rateImage(bitmap)
+            if(isAi) {
+
+                scanViewModel.setUriForUpload(filePath)
+                scanViewModel.calculateRating(bitmap)
+                findNavController().navigate(R.id.action_scanFragment_to_aiScanFragment)
             }
 
 
@@ -189,21 +136,5 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
     }
 
 
-    private fun hideButtons() {
-        btnAIScan.isVisible = false
-        btnCommunityRating.isVisible = false
-        lottieScanning.isVisible = true
-        tvPleaseWait.isVisible = true
-        tvPleaseWait.isVisible = true
 
-        showButtons()
-
-    }
-
-    private fun showButtons() {
-        btnAIScan.isVisible = true
-        btnCommunityRating.isVisible = true
-        lottieScanning.isVisible = false
-        tvPleaseWait.isVisible = false
-    }
 }

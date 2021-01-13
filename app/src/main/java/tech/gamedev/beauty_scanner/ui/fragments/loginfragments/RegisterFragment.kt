@@ -46,16 +46,20 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun createNewUser() = CoroutineScope(Dispatchers.IO).launch {
-        val querySnapshot = firestore.collection(USER_COLLECTION)
-            .whereEqualTo("userName", etCreateUsername.text.toString())
-            .get()
-            .await()
+        val querySnapshot =
+            firestore.collection(USER_COLLECTION).document(auth.currentUser!!.email!!)
+                .collection("user_information")
+                .whereEqualTo("userName", etCreateUsername.text.toString())
+                .get()
+                .await()
+
         if (querySnapshot.documents.isNullOrEmpty()) {
             val user = User(
                 auth.currentUser!!.email.toString(),
                 etCreateUsername.text.toString()
             )
-            firestore.collection(USER_COLLECTION).add(user).await()
+            firestore.collection(USER_COLLECTION).document(user.email)
+                .collection("user_information").add(user).await()
             withContext(Dispatchers.Main) {
                 Toast.makeText(
                         requireContext(),

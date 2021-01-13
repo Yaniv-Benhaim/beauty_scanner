@@ -116,6 +116,12 @@ dependencies {
     //APP RATE
     implementation 'com.suddenh4x.ratingdialog:awesome-app-rating:2.2.1'
 
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:7.0.0'
+
+    // Paging Library (For Pagination Only)
+    implementation 'android.arch.paging:runtime:2.0.1'
+
 
 
 

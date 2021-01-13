@@ -1,16 +1,26 @@
 package tech.gamedev.beauty_scanner.viewmodels
 
 import android.graphics.Bitmap
+import android.net.Uri
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.storage.StorageReference
+import tech.gamedev.beauty_scanner.repo.MainRepo
 
-class ScanViewModel : ViewModel() {
+class ScanViewModel @ViewModelInject constructor(
+    private val mainRepo: MainRepo
+) : ViewModel() {
 
     private val _mutableBitmap = MutableLiveData<Bitmap>()
+    val liveBitmap: LiveData<Bitmap> = _mutableBitmap
+
+    private val _uri = MutableLiveData<Uri>()
+    private val _ref = MutableLiveData<StorageReference>()
 
     private val _lastRating = MutableLiveData<Int>()
-    private val lastRating: LiveData<Int> = _lastRating
+    val lastRating: LiveData<Int> = _lastRating
 
     private val _isVisible = MutableLiveData<Boolean>()
     val isVisible: LiveData<Boolean> = _isVisible
@@ -25,7 +35,7 @@ class ScanViewModel : ViewModel() {
                 return lastRating.value!!
             }
 
-        }else{
+        } else {
             _mutableBitmap.value = bitmap
             _lastRating.value = (5..10).random()
             return _lastRating.value!!
@@ -34,6 +44,13 @@ class ScanViewModel : ViewModel() {
         _lastRating.value = (5..10).random()
         return _lastRating.value!!
     }
+
+    fun setUriForUpload(uri: Uri) {
+        _uri.value = uri
+
+    }
+
+    fun uploadImageToStorage() = mainRepo.uploadImage(_uri.value!!, _lastRating.value)
 
 
 }
