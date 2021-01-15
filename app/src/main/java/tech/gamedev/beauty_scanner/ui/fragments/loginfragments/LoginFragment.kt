@@ -85,6 +85,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         .show()
 
                     val querySnapshot = firestore.collection(USER_COLLECTION)
+                        .document(account.email.toString())
+                        .collection("user_information")
                         .whereEqualTo("email", account.email)
                         .get()
                         .await()
@@ -95,8 +97,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         val user = document.toObject<User>()
                         users.add(user!!)
                     }
-                    Toast.makeText(requireContext(), users.size.toString(), Toast.LENGTH_SHORT)
-                        .show()
+
 
 
                     if (users.isEmpty()) {

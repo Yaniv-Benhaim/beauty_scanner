@@ -24,6 +24,10 @@ class MainRepo {
 
     private val imageCollectionRef = Firebase.firestore.collection("community_images")
     private val userCollectionRef = Firebase.firestore.collection("users")
+    private val _downloadUrl = MutableLiveData<String>()
+    val downloadUrl: LiveData<String> = _downloadUrl
+    private val _uploadFinished = MutableLiveData<Boolean>()
+    val uploadFinished = _uploadFinished
     private val _userImages = MutableLiveData<ArrayList<UserImage>>()
     private val userImages: LiveData<ArrayList<UserImage>> = _userImages
     private val _uploadProgress = MutableLiveData<Double>()
@@ -45,7 +49,7 @@ class MainRepo {
         storageRef = storage.reference
 
         val ref = storageRef?.child("post_images/" + UUID.randomUUID().toString())
-        val uploadTask = ref?.putFile(filePath!!)
+        val uploadTask = ref?.putFile(filePath)
 
         val urlTask =
             uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
@@ -58,6 +62,9 @@ class MainRepo {
             }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUri = task.result
+                    _downloadUrl.value = downloadUri.toString()
+                    _uploadFinished.value = true
+
 
                     val post = Post(
                         downloadUri.toString(),

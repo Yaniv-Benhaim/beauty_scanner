@@ -6,8 +6,8 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.storage.StorageReference
 import tech.gamedev.beauty_scanner.repo.MainRepo
+
 
 class ScanViewModel @ViewModelInject constructor(
     private val mainRepo: MainRepo
@@ -16,8 +16,11 @@ class ScanViewModel @ViewModelInject constructor(
     private val _mutableBitmap = MutableLiveData<Bitmap>()
     val liveBitmap: LiveData<Bitmap> = _mutableBitmap
 
+
     private val _uri = MutableLiveData<Uri>()
-    private val _ref = MutableLiveData<StorageReference>()
+
+    val downloadUrl = mainRepo.downloadUrl
+    val isUploadFinished = mainRepo.uploadFinished
 
     private val _lastRating = MutableLiveData<Int>()
     val lastRating: LiveData<Int> = _lastRating
@@ -30,7 +33,9 @@ class ScanViewModel @ViewModelInject constructor(
     }
 
     fun calculateRating(bitmap: Bitmap) : Int {
-        if(bitmap.sameAs(_mutableBitmap.value)){
+
+
+        if (bitmap!!.sameAs(_mutableBitmap.value)) {
             _lastRating.value?.let {
                 return lastRating.value!!
             }

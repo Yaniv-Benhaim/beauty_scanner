@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -48,23 +49,33 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private fun createNewUser() = CoroutineScope(Dispatchers.IO).launch {
         val querySnapshot =
             firestore.collection(USER_COLLECTION).document(auth.currentUser!!.email!!)
+                .collection("user_information").document(
+                    auth.currentUser!!.email.toString()
+                )
                 .collection("user_information")
                 .whereEqualTo("userName", etCreateUsername.text.toString())
                 .get()
                 .await()
 
-        if (querySnapshot.documents.isNullOrEmpty()) {
+        /*Log.d("REGISTER", "DATA: ${querySnapshot.data}")*/
+        val users = ArrayList<User>()
+        for (document in querySnapshot.documents) {
+            val user = document.toObject<User>()
+            //ADDING USER OBJECT TO THE ARRAY
+            users.add(user!!)
+        }
+        if (users.isNullOrEmpty()) {
             val user = User(
                 auth.currentUser!!.email.toString(),
                 etCreateUsername.text.toString()
             )
             firestore.collection(USER_COLLECTION).document(user.email)
-                .collection("user_information").add(user).await()
+                .collection("user_information").document(user.email).set(user).await()
             withContext(Dispatchers.Main) {
                 Toast.makeText(
-                        requireContext(),
-                        "Saved username successfully",
-                        Toast.LENGTH_LONG
+                    requireContext(),
+                    "Saved username successfully",
+                    Toast.LENGTH_LONG
                 ).show()
                 findNavController().navigate(R.id.actionGlobalToGradeFragment)
             }

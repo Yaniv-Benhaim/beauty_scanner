@@ -4,24 +4,33 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_top_rated.*
 import tech.gamedev.beauty_scanner.R
-import tech.gamedev.beauty_scanner.adapters.GridAdapter
+import tech.gamedev.beauty_scanner.adapters.PostGridAdapter
 import tech.gamedev.beauty_scanner.data.models.UserImage
 import tech.gamedev.beauty_scanner.viewmodels.MainViewModel
 
 
-class TopRatedFragment : Fragment(R.layout.fragment_top_rated), GridAdapter.OnPostClicked {
+class TopRatedFragment : Fragment(R.layout.fragment_top_rated) {
 
-    private lateinit var gridAdapter: GridAdapter
+    private lateinit var gridAdapter: PostGridAdapter
+    private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
     private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
+        db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+
+
     }
 
     private fun subscribeToObservers() {
@@ -32,15 +41,27 @@ class TopRatedFragment : Fragment(R.layout.fragment_top_rated), GridAdapter.OnPo
     }
 
     private fun setupGridRecycler(topPosts: ArrayList<UserImage>) = rvGridImages.apply {
-        gridAdapter = GridAdapter(topPosts, this@TopRatedFragment)
+
+
+        val query = db.collection("community_images")
+
+        val config = PagedList.Config.Builder()
+            .setInitialLoadSizeHint(17)
+            .setPageSize(3)
+            .build()
+
+        val options = FirestorePagingOptions.Builder<UserImage>().setQuery(
+            query, config,
+            UserImage::class.java
+        )
+            .setLifecycleOwner(this@TopRatedFragment).build()
+
+
+
+        gridAdapter = PostGridAdapter(options)
         val gridLayoutManager =
             GridLayoutManager(requireContext(), 3, LinearLayoutManager.VERTICAL, false)
         layoutManager = gridLayoutManager
         adapter = gridAdapter
-    }
-
-    override fun onPostClicked(position: Int) {
-        val action = TopRatedFragmentDirections.actionGlobalToPostDetailFragment(position)
-        findNavController().navigate(action)
     }
 }

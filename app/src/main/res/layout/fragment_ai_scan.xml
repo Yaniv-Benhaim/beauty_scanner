@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_pink"
     tools:context=".ui.fragments.detailfragments.AiScanFragment">
 
 
@@ -11,14 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="48dp"
+        app:cardBackgroundColor="@color/pink"
         app:cardCornerRadius="15dp"
         app:cardElevation="3dp">
 
         <ImageView
-            android:id="@+id/ivAiScanImage"
+            android:id="@+id/ivAiScanImage2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
+
+
     </androidx.cardview.widget.CardView>
 
     <LinearLayout

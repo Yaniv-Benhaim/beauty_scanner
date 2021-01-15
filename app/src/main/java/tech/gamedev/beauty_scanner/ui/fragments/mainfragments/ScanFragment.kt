@@ -105,7 +105,7 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
                 .Media
                 .getBitmap(requireActivity().contentResolver, filePath)
 
-            ivDisplayImage.setImageBitmap(newBitMap)
+            /*ivDisplayImage.setImageBitmap(newBitMap)*/
             bitmap = newBitMap
             if(isAi) {
 

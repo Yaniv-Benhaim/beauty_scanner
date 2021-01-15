@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter
@@ -16,15 +17,28 @@ import tech.gamedev.beauty_scanner.data.models.UserImage
 
 class PostAdapter(options: FirestorePagingOptions<UserImage>) :
     FirestorePagingAdapter<UserImage, PostAdapter.ItemHolder>(options) {
+    private val numberRatingAdapter = NumberRatingAdapter()
+
     override fun onBindViewHolder(
         holder: ItemHolder,
-        i: Int,
+        position: Int,
         post: UserImage
     ) {
 
         holder.itemView.apply {
             Glide.with(context).load(post.imageUrl).into(ivRateImage)
             tvItemUserName.text = post.user
+            if (position > 0) {
+                lottieSwipeUp.isVisible = false
+            }
+
+            vvNumberRating.apply {
+                adapter = numberRatingAdapter
+                clipToPadding = false
+                clipChildren = false
+                offscreenPageLimit = 3
+                currentItem = 6
+            }
         }
 
     }

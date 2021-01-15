@@ -20,4 +20,9 @@
     <string name="search">Search</string>
     <string name="grid_post_image">Grid post image</string>
     <string name="rate_me">Rate me</string>
+    <string name="result">Result</string>
+    <string name="symmetry">Symmetry:</string>
+    <string name="golden_ratio">Golden ratio:</string>
+    <string name="facial_structure">Facial structure:</string>
+    <string name="total_avarage">Total avarage:</string>
 </resources>
