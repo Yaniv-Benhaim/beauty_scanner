@@ -7,6 +7,7 @@
     android:background="@drawable/bg_pink"
     tools:context=".ui.fragments.detailfragments.ScanResultFragment">
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cvResultImage"
         android:layout_width="0dp"
@@ -194,6 +195,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line1" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabBtnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#E91E63"
+        android:clickable="true"
+        android:src="@drawable/abc_vector_test"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btnShareToCommunity"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_share"
+        app:layout_constraintBottom_toBottomOf="@id/fabBtnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fabBtnBack" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

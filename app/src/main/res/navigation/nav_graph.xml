@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_scanFragment_to_aiScanFragment"
             app:destination="@id/aiScanFragment" />
+        <action
+            android:id="@+id/action_scanFragment_to_postFragment"
+            app:destination="@id/postFragment" />
     </fragment>
     <fragment
         android:id="@+id/gradeFragment"
@@ -100,6 +103,11 @@
         android:name="tech.gamedev.beauty_scanner.ui.fragments.detailfragments.ScanResultFragment"
         android:label="fragment_scan_result"
         tools:layout="@layout/fragment_scan_result" />
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="tech.gamedev.beauty_scanner.ui.fragments.createpost.PostFragment"
+        android:label="fragment_post"
+        tools:layout="@layout/fragment_post" />
 
 
 </navigation>

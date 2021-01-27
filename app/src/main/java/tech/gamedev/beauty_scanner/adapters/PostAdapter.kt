@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.firebase.ui.firestore.paging.FirestorePagingAdapter
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.firebase.ui.firestore.paging.LoadingState
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.android.synthetic.main.item_user_image.view.*
 import tech.gamedev.beauty_scanner.R
 import tech.gamedev.beauty_scanner.data.models.UserImage
@@ -19,11 +20,15 @@ class PostAdapter(options: FirestorePagingOptions<UserImage>) :
     FirestorePagingAdapter<UserImage, PostAdapter.ItemHolder>(options) {
     private val numberRatingAdapter = NumberRatingAdapter()
 
+    var listener: PostClickedListener? = null
+
     override fun onBindViewHolder(
         holder: ItemHolder,
         position: Int,
         post: UserImage
     ) {
+
+        holder.initialize()
 
         holder.itemView.apply {
             Glide.with(context).load(post.imageUrl).into(ivRateImage)
@@ -31,6 +36,7 @@ class PostAdapter(options: FirestorePagingOptions<UserImage>) :
             if (position > 0) {
                 lottieSwipeUp.isVisible = false
             }
+
 
             vvNumberRating.apply {
                 adapter = numberRatingAdapter
@@ -61,6 +67,21 @@ class PostAdapter(options: FirestorePagingOptions<UserImage>) :
     }
 
     inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun initialize() {
+            itemView.btnShare.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    listener?.onPostClicked(getItem(adapterPosition)!!)
+                }
+            }
+        }
 
+    }
+
+    interface PostClickedListener {
+        fun onPostClicked(documentSnapshot: DocumentSnapshot)
+    }
+
+    fun setOnPostClickListener(listener: PostClickedListener) {
+        this.listener = listener
     }
 }

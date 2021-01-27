@@ -18,12 +18,13 @@ class ScanViewModel @ViewModelInject constructor(
 
 
     private val _uri = MutableLiveData<Uri>()
+    val uri: LiveData<Uri> = _uri
 
     val downloadUrl = mainRepo.downloadUrl
     val isUploadFinished = mainRepo.uploadFinished
 
     private val _lastRating = MutableLiveData<Int>()
-    val lastRating: LiveData<Int> = _lastRating
+    private val lastRating: LiveData<Int> = _lastRating
 
     private val _isVisible = MutableLiveData<Boolean>()
     val isVisible: LiveData<Boolean> = _isVisible
@@ -55,7 +56,13 @@ class ScanViewModel @ViewModelInject constructor(
 
     }
 
-    fun uploadImageToStorage() = mainRepo.uploadImage(_uri.value!!, _lastRating.value)
+    fun uploadImageToStorage() = mainRepo.uploadImage(_uri.value!!, _lastRating.value!!)
+
+    fun createCommunityPost() = mainRepo.uploadImageAndCreatePost(_uri.value!!)
+
+    fun setAverageRating(averageRating: Int) {
+        _lastRating.value = averageRating
+    }
 
 
 }

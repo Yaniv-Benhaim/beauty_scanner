@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagedList
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_people.*
@@ -15,15 +16,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import tech.gamedev.beauty_scanner.R
-import tech.gamedev.beauty_scanner.adapters.GradeAdapter
 import tech.gamedev.beauty_scanner.adapters.PostAdapter
 import tech.gamedev.beauty_scanner.data.models.UserImage
 import tech.gamedev.beauty_scanner.viewmodels.MainViewModel
 
 @AndroidEntryPoint
-class GradeFragment : Fragment(R.layout.fragment_people) {
+class GradeFragment : Fragment(R.layout.fragment_people), PostAdapter.PostClickedListener {
 
-    private lateinit var gradeAdapter: GradeAdapter
+
     private val mainViewModel: MainViewModel by activityViewModels()
     lateinit var db: FirebaseFirestore
     lateinit var firestoreAdapter: PostAdapter
@@ -54,10 +54,7 @@ class GradeFragment : Fragment(R.layout.fragment_people) {
         }
     }
 
-    /*private fun setupViewPager(userPosts: ArrayList<UserImage>) = vvRatePeople.apply {
-        gradeAdapter = GradeAdapter(userPosts)
-        adapter = gradeAdapter
-    }*/
+
 
     private fun setFirestoreViewpager() = vvRatePeople.apply {
         val query = db.collection("community_images")
@@ -71,7 +68,11 @@ class GradeFragment : Fragment(R.layout.fragment_people) {
             .setLifecycleOwner(this@GradeFragment).build()
 
         firestoreAdapter = PostAdapter(options)
+        firestoreAdapter.setOnPostClickListener(this@GradeFragment)
         adapter = firestoreAdapter
     }
 
+    override fun onPostClicked(documentSnapshot: DocumentSnapshot) {
+
+    }
 }
