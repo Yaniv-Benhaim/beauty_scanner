@@ -25,6 +25,7 @@ import tech.gamedev.beauty_scanner.data.models.Post
 import tech.gamedev.beauty_scanner.data.models.User
 import tech.gamedev.beauty_scanner.data.models.UserImage
 import tech.gamedev.beauty_scanner.other.Constants.USER_COLLECTION
+import tech.gamedev.beauty_scanner.utils.FirestoreUtil
 import java.util.*
 
 class MainRepo {
@@ -94,6 +95,24 @@ class MainRepo {
         }
         _user.value = users[0]
         return users.isNotEmpty()
+    }
+
+    fun getCurrentUser(): User? {
+        CoroutineScope(Dispatchers.IO).launch {
+            FirestoreUtil.currentUserDocRef.get()
+                    .addOnSuccessListener {
+                        it.toObject<User>()?.let { userObject ->
+                            _user.postValue(userObject)
+                            Log.d("USER", user.value.toString())
+                        }
+
+                    }.addOnFailureListener {
+                        _user.postValue(null)
+                    }
+        }
+        Log.d("USER", user.value.toString())
+        return user.value
+
     }
 
 
@@ -170,7 +189,7 @@ class MainRepo {
                     )
 
                     GlobalScope.launch(Dispatchers.IO) {
-                        userCollectionRef.document(uid)
+                        userCollectionRef.document(user.value!!.email)
                             .collection("posts").add(post).await()
 
                         imageCollectionRef.document(uid).set(post).await()
@@ -184,7 +203,46 @@ class MainRepo {
             }.addOnFailureListener {
                 Log.d("UPLOAD", it.message.toString())
             }
+    }
 
+    fun updateProfileImage(pathFile: Uri) = CoroutineScope(Dispatchers.IO).launch {
+
+
+        auth = FirebaseAuth.getInstance()
+        storage = FirebaseStorage.getInstance()
+        storageRef = storage.reference
+
+        val ref = storageRef?.child("post_images/" + UUID.randomUUID().toString())
+        val uploadTask = ref?.putFile(pathFile)
+
+        val urlTask =
+                uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
+                        }
+                    }
+                    return@Continuation ref.downloadUrl
+                }).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
+                        _downloadUrl.value = downloadUri.toString()
+                        _uploadFinished.value = true
+
+                        GlobalScope.launch(Dispatchers.IO) {
+
+                            FirestoreUtil.currentUserDocRef.update("profilePicturePath", downloadUri.toString()).await()
+                            Log.d("UPLOAD", "UPLOAD SUCCESSFUL")
+                            getCurrentUser()
+
+                        }
+
+                    } else {
+                        Log.d("UPLOAD", "UPLOAD NOT COMPLETE")
+                    }
+                }.addOnFailureListener {
+                    Log.d("UPLOAD", it.message.toString())
+                }
     }
 
 

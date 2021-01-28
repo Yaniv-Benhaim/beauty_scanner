@@ -25,4 +25,7 @@
     <string name="golden_ratio">Golden ratio:</string>
     <string name="facial_structure">Facial structure:</string>
     <string name="total_avarage">Total avarage:</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="hate_it">Hate it</string>
+    <string name="love_it">Love it</string>
 </resources>

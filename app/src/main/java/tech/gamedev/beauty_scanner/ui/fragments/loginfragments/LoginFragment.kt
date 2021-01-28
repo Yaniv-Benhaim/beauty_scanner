@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,11 +15,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import tech.gamedev.beauty_scanner.R
 import tech.gamedev.beauty_scanner.other.Constants.AUTH_REQUEST_CODE
 import tech.gamedev.beauty_scanner.utils.extensions.createToast
@@ -80,10 +77,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             try {
                 auth.signInWithCredential(credentials).await()
                 withContext(Dispatchers.Main) {
+
                     createToast("Logged in successfully")
-
-
-                    if (loginViewModel.checkIfUserExists(account)) {
+                    loginViewModel.getAndSetCurrentUser()
+                    withContext(Dispatchers.Main) {
+                        progressLogin.isVisible = true
+                    }
+                    delay(2000)
+                    progressLogin.isVisible = false
+                    if (loginViewModel.user.value == null) {
                         findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
                     } else {
                         findNavController().navigate(R.id.actionGlobalToGradeFragment)
@@ -92,7 +94,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    Log.e("ERROR", e.message.toString())
                 }
             }
         }

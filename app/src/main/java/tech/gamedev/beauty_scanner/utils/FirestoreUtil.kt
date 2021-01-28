@@ -3,7 +3,9 @@ package tech.gamedev.beauty_scanner.utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import tech.gamedev.beauty_scanner.data.models.User
 
 object FirestoreUtil {
@@ -12,16 +14,17 @@ object FirestoreUtil {
         FirebaseFirestore.getInstance()
     }
 
-    private val currentUserDocRef: DocumentReference
+
+    val currentUserDocRef: DocumentReference
         get() = firestoreInstance.document("users/${FirebaseAuth.getInstance().currentUser!!.email}/user_information/${FirebaseAuth.getInstance().currentUser!!.email}")
 
     fun initCurrentUserIfFirstTime(onComplete: () -> Unit) {
         currentUserDocRef.get().addOnSuccessListener { documentSnapShot ->
             if (!documentSnapShot.exists()) {
                 val newUser = User(
-                    FirebaseAuth.getInstance().currentUser?.email ?: "",
-                    "",
-                    null
+                        FirebaseAuth.getInstance().currentUser?.email ?: "",
+                        "",
+                        null
                 )
                 currentUserDocRef.set(newUser).addOnSuccessListener {
                     onComplete()
@@ -33,9 +36,9 @@ object FirestoreUtil {
     }
 
     fun updateCurrentUser(
-        email: String = "",
-        userName: String = "",
-        profilePicturePath: String? = null
+            email: String = "",
+            userName: String = "",
+            profilePicturePath: String? = null
     ) {
         val userFieldMap = mutableMapOf<String, Any>()
         if (userName.isNotBlank()) userFieldMap["userName"] = userName
@@ -44,10 +47,8 @@ object FirestoreUtil {
         currentUserDocRef.update(userFieldMap)
     }
 
-    fun getCurrentUser(onComplete: (User) -> Unit) {
-        currentUserDocRef.get()
-            .addOnSuccessListener {
-                it.toObject<User>()?.let { it1 -> onComplete(it1) }
-            }
+
+    fun signOut() = CoroutineScope(Dispatchers.IO).launch {
+        FirebaseAuth.getInstance().signOut()
     }
 }

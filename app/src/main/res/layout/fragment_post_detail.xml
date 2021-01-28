@@ -7,57 +7,83 @@
 
 
     <ImageView
-        android:id="@+id/ivDetailImage"
+        android:id="@+id/ivRateImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/post_image"
         android:scaleType="centerCrop"
+        android:contentDescription="@string/post_image"
         tools:src="@drawable/img_example_user" />
 
 
     <ImageView
-        android:id="@+id/btnDetailShare"
+        android:id="@+id/btnShare"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="100dp"
         android:layout_marginEnd="24dp"
-        android:src="@drawable/ic_share_2"
+        android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_share_2"
         android:contentDescription="@string/share_post"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/btnDetailMessage"
+        android:id="@+id/btnMessage"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="32dp"
         android:contentDescription="@string/chat_button"
-        android:layout_marginEnd="24dp"
-        android:src="@drawable/messenger"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnDetailShare" />
+        android:src="@drawable/messenger"
+        app:layout_constraintTop_toBottomOf="@id/btnShare" />
 
     <TextView
-        android:id="@+id/tvDetailItemUserName"
+        android:id="@+id/tvItemUserName"
+        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/baloo"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="24sp"
+        android:fontFamily="@font/baloo"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RatingBar
-        android:id="@+id/ratingBarDetail"
-        style="@style/HeartRatingBarStyle"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/llLikeContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:rating="4"
-        android:stepSize="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginBottom="120dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/winter"
+            android:gravity="center"
+            android:text="@string/hate_it"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <TextView
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/winter"
+            android:gravity="center"
+            android:text="@string/love_it"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

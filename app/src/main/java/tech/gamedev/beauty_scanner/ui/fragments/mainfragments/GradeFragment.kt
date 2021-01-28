@@ -4,24 +4,21 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_people.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import tech.gamedev.beauty_scanner.R
 import tech.gamedev.beauty_scanner.adapters.PostAdapter
 import tech.gamedev.beauty_scanner.data.models.UserImage
 import tech.gamedev.beauty_scanner.viewmodels.MainViewModel
 
 @AndroidEntryPoint
-class GradeFragment : Fragment(R.layout.fragment_people), PostAdapter.PostClickedListener {
+class GradeFragment : Fragment(R.layout.fragment_people), PostAdapter.PostClickedListener, PostAdapter.PostLikedListener, PostAdapter.PostDislikedListener {
 
 
     private val mainViewModel: MainViewModel by activityViewModels()
@@ -32,27 +29,10 @@ class GradeFragment : Fragment(R.layout.fragment_people), PostAdapter.PostClicke
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         db = FirebaseFirestore.getInstance()
-
-        subscribeToObservers()
         setFirestoreViewpager()
-
-
     }
 
-    private fun subscribeToObservers() {
-        mainViewModel.userPosts.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                lifecycleScope.launch {
-                    delay(300)
-                    withContext(Dispatchers.Main) {
 
-                    }
-                }
-            } else {
-
-            }
-        }
-    }
 
 
 
@@ -73,6 +53,22 @@ class GradeFragment : Fragment(R.layout.fragment_people), PostAdapter.PostClicke
     }
 
     override fun onPostClicked(documentSnapshot: DocumentSnapshot) {
+        val userPost = documentSnapshot.toObject<UserImage>()
+        val action = GradeFragmentDirections.actionGlobalToPostDetailFragment(
+                userPost!!.user,
+                userPost.imageUrl,
+                userPost.likes,
+                userPost.disLikes,
+                userPost.uid
+        )
+        findNavController().navigate(action)
+    }
 
+    override fun onPostLiked(documentSnapshot: DocumentSnapshot) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPostDisliked(documentSnapshot: DocumentSnapshot) {
+        TODO("Not yet implemented")
     }
 }

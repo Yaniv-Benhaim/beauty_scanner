@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import tech.gamedev.beauty_scanner.R
+import tech.gamedev.beauty_scanner.utils.FirestoreUtil
 import kotlin.random.Random
 
 private var backPressed: Int = 0
@@ -30,4 +31,10 @@ fun Fragment.backToHomeAfterPost() {
 
 fun Fragment.createToast(message: String) {
     Toast.makeText(this.requireContext(), message, Toast.LENGTH_SHORT).show()
+}
+
+fun Fragment.signOut() {
+    FirestoreUtil.signOut()
+    this.findNavController().navigate(R.id.actionGlobalToLoginFragment)
+    createToast("Sign out successfully")
 }

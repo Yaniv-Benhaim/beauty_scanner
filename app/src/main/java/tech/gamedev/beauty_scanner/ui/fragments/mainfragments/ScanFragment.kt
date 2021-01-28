@@ -73,15 +73,15 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
     private fun chooseImage(communityRating: Boolean) {
         scanViewModel.setIfVisible(true)
         ImagePicker.with(this)
-            .crop(
-                9f,
-                16f
-            )                    //Crop image(Optional), Check Customization for more option
-            .compress(1024)            //Final image size will be less than 1 MB(Optional)
-            .maxResultSize(
-                1080,
-                1080
-            )    //Final image resolution will be less than 1080 x 1080(Optional)
+                .crop(
+                        9f,
+                        16f
+                )                    //Crop image(Optional), Check Customization for more option
+                .compress(2048)            //Final image size will be less than 1 MB(Optional)
+                .maxResultSize(
+                        1080,
+                        1920
+                )    //Final image resolution will be less than 1080 x 1080(Optional)
             .start()
 
         uploadImage = communityRating

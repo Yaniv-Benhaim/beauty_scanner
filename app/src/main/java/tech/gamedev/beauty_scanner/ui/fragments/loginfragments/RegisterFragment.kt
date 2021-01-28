@@ -66,11 +66,14 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
         if (users.isNullOrEmpty()) {
             val user = User(
-                auth.currentUser!!.email.toString(),
-                etCreateUsername.text.toString()
+                    auth.currentUser!!.email.toString(),
+                    etCreateUsername.text.toString()
             )
+
             firestore.collection(USER_COLLECTION).document(user.email)
                 .collection("user_information").document(user.email).set(user).await()
+
+
             withContext(Dispatchers.Main) {
                 Toast.makeText(
                     requireContext(),

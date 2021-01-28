@@ -1,5 +1,6 @@
 package tech.gamedev.beauty_scanner.viewmodels
 
+import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -34,4 +35,6 @@ class MainViewModel @ViewModelInject constructor(
             }
         }
     }
+
+    fun updateProfileImage(uri: Uri) = mainRepo.updateProfileImage(uri)
 }

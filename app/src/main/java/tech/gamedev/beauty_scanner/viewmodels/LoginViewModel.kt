@@ -17,5 +17,7 @@ class LoginViewModel @ViewModelInject constructor(val repo: MainRepo) : ViewMode
 
     fun setUserName(account: FirebaseUser) = repo.setUserName(account)
 
+    fun getAndSetCurrentUser() = repo.getCurrentUser()
+
 
 }

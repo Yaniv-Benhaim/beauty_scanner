@@ -82,8 +82,20 @@
         android:label="fragment_post_detail"
         tools:layout="@layout/fragment_post_detail">
         <argument
-            android:name="position"
-            app:argType="integer" />
+            android:name="user"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+        <argument
+            android:name="likes"
+            app:argType="long" />
+        <argument
+            android:name="disLikes"
+            app:argType="long" />
+        <argument
+            android:name="uid"
+            app:argType="string" />
     </fragment>
 
     <action

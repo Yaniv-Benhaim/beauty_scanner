@@ -18,14 +18,16 @@ import tech.gamedev.beauty_scanner.data.models.UserImage
 
 class PostAdapter(options: FirestorePagingOptions<UserImage>) :
     FirestorePagingAdapter<UserImage, PostAdapter.ItemHolder>(options) {
-    private val numberRatingAdapter = NumberRatingAdapter()
+
 
     var listener: PostClickedListener? = null
+    var listenerLiked: PostLikedListener? = null
+    var listenerDisliked: PostDislikedListener? = null
 
     override fun onBindViewHolder(
-        holder: ItemHolder,
-        position: Int,
-        post: UserImage
+            holder: ItemHolder,
+            position: Int,
+            post: UserImage
     ) {
 
         holder.initialize()
@@ -35,15 +37,6 @@ class PostAdapter(options: FirestorePagingOptions<UserImage>) :
             tvItemUserName.text = post.user
             if (position > 0) {
                 lottieSwipeUp.isVisible = false
-            }
-
-
-            vvNumberRating.apply {
-                adapter = numberRatingAdapter
-                clipToPadding = false
-                clipChildren = false
-                offscreenPageLimit = 3
-                currentItem = 6
             }
         }
 
@@ -73,6 +66,16 @@ class PostAdapter(options: FirestorePagingOptions<UserImage>) :
                     listener?.onPostClicked(getItem(adapterPosition)!!)
                 }
             }
+            itemView.tvLike.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    listenerLiked?.onPostLiked(getItem(adapterPosition)!!)
+                }
+            }
+            itemView.tvDislike.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    listenerDisliked?.onPostDisliked(getItem(adapterPosition)!!)
+                }
+            }
         }
 
     }
@@ -81,7 +84,23 @@ class PostAdapter(options: FirestorePagingOptions<UserImage>) :
         fun onPostClicked(documentSnapshot: DocumentSnapshot)
     }
 
+    interface PostLikedListener {
+        fun onPostLiked(documentSnapshot: DocumentSnapshot)
+    }
+
+    interface PostDislikedListener {
+        fun onPostDisliked(documentSnapshot: DocumentSnapshot)
+    }
+
     fun setOnPostClickListener(listener: PostClickedListener) {
         this.listener = listener
+    }
+
+    fun setOnPostLikedListener(listener: PostLikedListener) {
+        this.listenerLiked = listener
+    }
+
+    fun setOnPostDislikedListener(listener: PostDislikedListener) {
+        this.listenerDisliked = listener
     }
 }
